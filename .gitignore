@@ -1,0 +1,5 @@
+Local_*
+.vscode
+.vscode/*
+build
+buid/*
