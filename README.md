@@ -57,13 +57,21 @@ To package the application
 * GUI improvmenets
   * Improve module column start position match
   * Add condition to change text color to black if background is light?
+  * Flipster home
+  * Tile title labels
+  * Highlight over-time modules in red?
+  * Module time addition spinner to update while holding down
+  * Module time custom entry
 * Module details
   * Add ability to add notes to module (make module expandable)
+  * Ability to add file-links within notes
 * Entry focus
   * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
 
 ## Bugs: Known bugs
-* Currently no known bugs - 05/11/2017
+* No known bugs as of 05/11/2017 1.0.1 build
+
 
 ## Bugs: Fixed bugs
-* No bugs found/fixed as of version 1.0.0
+* Bugs found/fixed as of version 1.0.0
+  * Module minute time change not committed - fixed as of 1.0.1 build

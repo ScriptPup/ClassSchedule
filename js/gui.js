@@ -199,13 +199,15 @@ function showSchedule(Scheduler){
                                 .addClass("item_minutes")
                                 .val(curEntry.items[i].time)
                                 .on('change',function(e){
-                                    nTime = $(e.target).val(),
-                                    nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
+                                    var
+                                        nTime = $(e.target).val(),
+                                        nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
+                                   ttest=e.target;
                                     $(e.target).prev().text(nTimeDisplay);
                                     $(e.target).prev().attr('time',nTime);
-                                    $(e.target).next().attr('time',nTime);                                  
-                                    Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parent('.entry').attr('id'),$(e.target).attr('index'),nTime,function(){
-                                         updateTimes($(e.target).parent('.entry').attr('id'));
+                                    $(e.target).next().attr('time',nTime);                                
+                                    Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),nTime,function(){
+                                         updateTimes($(e.target).parents('.entry').attr('id'));
                                     });
                                 })
                         )
