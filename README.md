@@ -13,3 +13,57 @@ To do this in testing (without fully packaging)
 To package the application
 - Download nw from: https://nwjs.io/
 - Run (from powershell 5.0, in folder containing nw.exe): Compress-Archive -Path Path\To\ClassSchedule -DestinationPath Path\To\ClassSchedule.zip ; copy /b nw.exe+Path\To\ClassSchedule.nw CLassSchedule.exe
+
+## Features: Current (version 0.1.0)
+* Create new class
+  * Class Name
+  * Class Image
+  * Class Type
+  * Class Days
+  * First Schedule Name
+* Create new entry (Day)
+  * Modifiable start time
+* Rename entry
+* Delete entry
+* Create new module (intra-entry)
+  * Create above
+  * Create below
+* Move module (drag and drop)
+  * Move between entries
+  * Move within same entry
+* Delete module
+* Change entry title color (colorpicker)
+* Change module title color (colorpicker)
+* Change module time (how long the module will run for)
+* Create new schedule
+  * Allows different modules between schedules
+  * Allows different module order between schedules
+  * Allows different times per module between schedules
+  * Allows different entry starting time
+* Locked "end of day" row with ending time-of-day
+* Custom css files can be added to the settings folder
+* All classes stored as .json files, user editable
+* Editable class type
+
+## Features: Planned
+* Per-class css themes?
+* Improve program opening speed
+  * Possibly create installer option
+  * Possibly eliminate some nw dependancies?
+* Decrease .exe size
+  * Requires research
+* Distribution system?
+  * Possibly add online or hosted class distro system to share between trainers
+* GUI improvmenets
+  * Improve module column start position match
+  * Add condition to change text color to black if background is light?
+* Module details
+  * Add ability to add notes to module (make module expandable)
+* Entry focus
+  * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
+
+## Bugs: Known bugs
+* Currently no known bugs - 05/11/2017
+
+## Bugs: Fixed bugs
+* No bugs found/fixed as of version 1.0.0
