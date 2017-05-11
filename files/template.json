@@ -1,0 +1,22 @@
+{
+	"selected_schedule": "TEMPLATE_SCHEDULE",
+	"class_info": {
+		"name": "TEMPLATE_NAME",
+		"days": "5",
+		"hours_in_day": 9
+	},
+	"scheduled": {
+		"TEMPLATE_SCHEDULE": {
+			"class_type": "Instructor",
+			"updated": "05-10-2017 13:00:00",
+			"entries": [{
+					"title": "Day 1",
+					"start_time": "08:00",
+					"items": [{
+							"name": "Module 1",
+							"time": 0
+						}]
+				}]
+		}
+	}
+}

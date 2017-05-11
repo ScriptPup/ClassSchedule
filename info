@@ -1,0 +1,15 @@
+Command to package apps
+
+copy /b nw.exe+testpackage.nw app3.exe
+
+--enable-logging
+
+
+
+
+
+nw\nw.exe C:\Users\Ethan.LEVISINGER.000\OneDrive\WorkSpaces\ClassSchedule\program --enable-logging
+nw\nw.exe O:\OneDrive\WorkSpaces\ClassSchedule\program --enable-logging
+ninja -C out/Release nwjs
+
+Tile images should be 120x120

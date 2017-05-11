@@ -1,0 +1,57 @@
+<html debug="true">
+    <head id="true_head">   
+        <!---->
+        <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js#startOpened=false">
+        
+        </script>
+        <!---->
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>GLND Class Schedule</title>
+        <link rel="icon" type="image/png" href="./scheduler.png">
+        <link rel="stylesheet" href="./css/jquery-ui.css">
+        <link rel="stylesheet" href="./css/spectrum.css">
+        <link rel="stylesheet" href="./css/sp-dark.css">
+	    <link rel="stylesheet" href="./css/styles.css">
+        
+        <script src="./js/jquery-3.1.1.min.js"></script>
+        <script src="./js/initialize.js"></script>
+        <script src="./js/colorpicker/spectrum.js"></script>
+        <script src="./js/jquery.flipster.min.js"></script>
+        <script src="./js/ui/jquery-ui.min.js"></script>
+        <script src="./js/context/jquery.ui-contextmenu.min.js"></script>
+        <script src="./js/moment.js"></script>
+        <script src="./js/other.js"></script>
+        <script src="./js/contextmenus.js"></script>
+        <script src="./js/main.js"></script>        
+       <script src="./js/gui.js"></script>
+    </head>
+    <body>
+        <div id="back"></div>
+        <div class="top-left">
+            <span class="spanned" id="title" class="title">Select Class</span>
+            <span class="new_class spanned" id="new_class">New Class</span>
+            <span class="spanned" id="days"></span>
+             <div class="schedule_contain">Class Schedule: <select style="display: inline" id="schedules"></select></div>           
+            <div class="options">                
+                <span id="hours_container">
+                    Hours in day:
+                    <input id="hours_in_day" type="number" />
+                </span>
+            </div>
+        </div>
+        
+        <div class="portal">            
+            <div class="list">
+                <ul>
+                </ul>
+            </div>
+            <div class="app">
+
+            </div>
+        </div>
+        <span id="type" contenteditable="true"></span> 
+    </body>
+</html>
