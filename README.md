@@ -76,3 +76,13 @@ To package the application
 ## Bugs: Fixed bugs
 * Bugs found/fixed as of version 1.0.0
   * Module minute time change not committed - fixed as of 1.0.1 build
+
+# Change Log
+## 1.0.1
+* Fixed bug: Module minute time change not committed
+
+## 1.1.0
+* Fixed bug: Jumps to top when adding stuff
+* Fixed bug: Takes a long time to commit minute change for modules
+* Added feature: Context menu to modify module time duration
+* Added feature: Context menu to rename module entry
