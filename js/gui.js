@@ -198,14 +198,14 @@ function showSchedule(Scheduler){
                                 .attr('index',i)
                                 .addClass("item_minutes")
                                 .val(curEntry.items[i].time)
-                                .on('change',function(e){
+                                .on('input',function(e){
                                     var
                                         nTime = $(e.target).val(),
                                         nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
                                    ttest=e.target;
                                     $(e.target).prev().text(nTimeDisplay);
                                     $(e.target).prev().attr('time',nTime);
-                                    $(e.target).next().attr('time',nTime);                                
+                                    $(e.target).next().attr('time',nTime);                                                           
                                     Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),nTime,function(){
                                          updateTimes($(e.target).parents('.entry').attr('id'));
                                     });
@@ -269,7 +269,7 @@ function showSchedule(Scheduler){
     });
 }
 
-function insertRow(name,entry,where,ref){    
+function insertRow(name,entry,where,ref,Scheduler){    
     var addTO = (where === 'above') ? 1 : -1
         nIx = ( Number($(ref).attr('index')) + addTO )
         newThing = $('<div></div>')
@@ -285,13 +285,26 @@ function insertRow(name,entry,where,ref){
         .append($('<span></span')
             .addClass('classTime')
             .addClass('moduleAttrib')
-            .text('00 Min.')
+            .text('0 Min.')
         )
         .append($('<input type="number" />')
             .addClass('modTime')
             .addClass('item_minutes')
             .attr('index',nIx)
             .val(0)
+            .on('change',function(e){
+                var
+                    nTime = $(e.target).val(),
+                    nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
+                ttest=e.target;
+                $(e.target).prev().text(nTimeDisplay);
+                $(e.target).prev().attr('time',nTime);
+                $(e.target).next().attr('time',nTime);   
+                updateTimes($(e.target).parents('.entry').attr('id'),Scheduler);                             
+                Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),nTime,function(){
+                        
+                });
+            })
         )
         .append($('<span></span>')
             .addClass('item_time')

@@ -40,14 +40,14 @@ contextMenuFunctions = {
 					addTO = (where === 'above') ? 1 : -1
 					nIx = (Number($(ref).attr('index')) + addTO);
 
-					insertRow(name, entry, where, ref);
+					insertRow(name, entry, where, ref,Schedule);
 					reIndex();
 					$('#new_module_dialog').remove();
 					Schedule.insertItm(Schedule.data.selected_schedule, entry, $('[id="' + name + '"]').attr('index'), {
 						"name": name,
 						"time": 0
 					}, function () {
-						showSchedule(Schedule)
+						//showSchedule(Schedule)
 					});
 				}))
 			.append($('<button style="display: inline;" id="cancel_new">Cancel</button>')
@@ -62,6 +62,89 @@ contextMenuFunctions = {
     },
 	insertModBelow: function (event, ui) {
 		contextMenuFunctions.insertMod("below", event, ui);
+	},
+	renameMod: function (event, ui) {
+		if (ui.target.tagName !== 'DIV') {
+			var tar = $(ui.target).parent();
+		} else {
+			var tar = $(ui.target).parent();
+		}
+		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />'))
+			.on('keydown', function (e) {
+				if (e.which == 13) {
+					$('#submit_new').click();
+				}
+				if (e.keyCode == 27) {
+					$('#cancel_new').click();
+				}
+			})
+			.css('left', event.pageX)
+			.css('top', (event.pageY) - 50)
+			.append($('<button style="display: inline;" id="submit_new">Add</button>')
+				.on('click', function () {
+					var ent = $(tar).parents('.entry').attr('id'),
+						ix = $(tar).attr('index'),
+						key = "name",
+						value = $('#new_module').val();
+					Schedule.changeItm(Schedule.data.selected_schedule,ent,ix,key,value,function(){
+						$(tar).children('.class_name').html(value);
+						reIndex();
+						$('#new_module_dialog').remove();
+					});
+					
+				}))
+			.append($('<button style="display: inline;" id="cancel_new">Cancel</button>')
+				.on('click', function (e) {
+					$('#new_module_dialog').remove();
+				}));	
+			$('body').append(nMod);
+			$('#new_module').focus();
+
+	},
+	setTimeMod: function (event, ui){
+		if (ui.target.tagName !== 'DIV') {
+			var tar = $(ui.target).parent();
+		} else {
+			var tar = $(ui.target).parent();
+		}
+		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+			.append($('<input style="display: inline;" type="number" name="new_module" id="new_module" />'))
+			.on('keydown', function (e) {
+				if (e.which == 13) {
+					$('#submit_new').click();
+				}
+				if (e.keyCode == 27) {
+					$('#cancel_new').click();
+				}
+			})
+			.css('left', event.pageX)
+			.css('top', (event.pageY) - 50)
+			.append($('<button style="display: inline;" id="submit_new">Add</button>')
+				.on('click', function () {
+					var ent = $(tar).parents('.entry').attr('id'),
+						ix = $(tar).attr('index'),
+						key = "name",
+						value = $('#new_module').val();
+					Schedule.updateModDur(Schedule.data.selected_schedule,ent,ix,value,function(){
+						var
+							nTime = value,
+							nTimeDisplay = (nTime<61) ? (nTime) +" Min." : parseFloat((nTime/60).toFixed(2)) + " Hr.";
+						
+						$(tar).children('.classTime').text(nTimeDisplay);
+						$(tar).children('.classTime').attr('time',nTime);
+						$(tar).children('.item_time').attr('time',nTime);
+
+						$('#new_module_dialog').remove();
+					});
+					
+				}))
+			.append($('<button style="display: inline;" id="cancel_new">Cancel</button>')
+				.on('click', function (e) {
+					$('#new_module_dialog').remove();
+				}));	
+			$('body').append(nMod);
+			$('#new_module').focus();
 	},
     // Entries menu items
     deleteEntry: function (event, ui) {
@@ -170,10 +253,12 @@ contextMenuFunctions = {
 // Modules menu
 ModulesMenu = [
     {title: "Delete", action: contextMenuFunctions.delete}, 
+	{title: "Rename", action: contextMenuFunctions.renameMod}, 
     {title: "---"},
     {title: "Insert Above", action: contextMenuFunctions.insertModAbove },
     {title: "Insert Below", action: contextMenuFunctions.insertModBelow },
-    { title: "---" },                          
+    { title: "---" },   
+	{title: "Set Time (Minutes)", action: contextMenuFunctions.setTimeMod},
     { title: "---" },
     { title: "Change Color <input type='text' id='pickcolor' size=2 />", addClass: "colorer" }                 
 ];

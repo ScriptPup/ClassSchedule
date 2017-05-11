@@ -69,8 +69,9 @@ To package the application
   * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
 
 ## Bugs: Known bugs
-* No known bugs as of 05/11/2017 1.0.1 build
-
+* Known bugs as of 05/11/2017 1.0.1 build
+  * Jumps to top when adding stuff
+  * Takes a long time to commit minute change for modules
 
 ## Bugs: Fixed bugs
 * Bugs found/fixed as of version 1.0.0
