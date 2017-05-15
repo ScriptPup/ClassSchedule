@@ -58,6 +58,7 @@ To package the application
 * GUI improvmenets
   * Add condition to change text color to black if background is light? 
   * Highlight over-time modules in red?
+  * When renaming module or entry, auto-fill input with current name
 * Module details
   * Add ability to add notes to module (make module expandable)
   * Ability to add file-links within notes
