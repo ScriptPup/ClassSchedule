@@ -65,8 +65,9 @@ To package the application
   * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
 
 ## Bugs: Known bugs
-* Known bugs as of 05/11/2017 1.1.1 build
-  * Colors set on wrong modules after adding new module (index issue?)
+* Known bugs as of 05/11/2017 1.2.0 build
+  * Colors set on wrong modules after adding new module (index issue?) - CONFIRMED ISSUE STILL EXISTS
+  * Times not fully updating after manually setting module time
 # Change Log
 ## 1.0.1
 * Fixed bug[1]: Module minute time change not committed
