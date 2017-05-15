@@ -38,7 +38,6 @@ $(function(){
                   .text(baseName);
                 li.appendTo(ul);
                 if(imgTest){
-                    console.log("Setting " + imgPath);
                     li.find('img').attr('src', imgPath);
                 } else {
                     li.find('img').attr('src','./css/img/default_tile.png');
@@ -65,8 +64,20 @@ $(function(){
           $('#back').on('click',function(e){
             window.location.reload();
           });
+          $('.list').flipster({
+            nav: false,
+            enableNav: false,            
+            start: 0,            
+            itemContainer: 'ul',
+            itemSelector: 'li',
+            start: 'center',
+            fadeIn: 400,
+            buttons: true,
+            enableNavButtons: false
+          });
+          setTimeout(function(){ $('.list-nav').fadeIn(400); }, 800);
         });
-      }      
+      }   
     });
     // auto resizing
     $( window ).resize(function() {

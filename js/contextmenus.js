@@ -134,7 +134,7 @@ contextMenuFunctions = {
 						$(tar).children('.classTime').text(nTimeDisplay);
 						$(tar).children('.classTime').attr('time',nTime);
 						$(tar).children('.item_time').attr('time',nTime);
-
+						$(tar).children('.modTime').val(nTime);
 						$('#new_module_dialog').remove();
 					});
 					
@@ -145,6 +145,7 @@ contextMenuFunctions = {
 				}));	
 			$('body').append(nMod);
 			$('#new_module').focus();
+			updateTimes($(tar).parents('.entry').attr('id'));
 	},
     // Entries menu items
     deleteEntry: function (event, ui) {
@@ -282,6 +283,12 @@ contextMenu = {
     beforeOpen: function(event, ui) {
         // replace the whole menu depending on click target type
         if( $(ui.target).hasClass("module") || $(ui.target).parents(".module").length  ) {
+			if(ui.target.tagName !== 'DIV'){
+				var tar = $(ui.target).parent();
+			} else { var tar = $(ui.target); }
+			if( $(tar).children('.modTime ').attr('disabled') === 'disabled' ){
+				return false;
+			}
             context = "module";
 			$(document).contextmenu("replaceMenu", ModulesMenu);
         } 

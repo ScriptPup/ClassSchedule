@@ -54,14 +54,10 @@ To package the application
   * Requires research
 * Distribution system?
   * Possibly add online or hosted class distro system to share between trainers
+  * Probably won't happen
 * GUI improvmenets
-  * Improve module column start position match
-  * Add condition to change text color to black if background is light?
-  * Flipster home
-  * Tile title labels
+  * Add condition to change text color to black if background is light? 
   * Highlight over-time modules in red?
-  * Module time addition spinner to update while holding down
-  * Module time custom entry
 * Module details
   * Add ability to add notes to module (make module expandable)
   * Ability to add file-links within notes
@@ -69,20 +65,25 @@ To package the application
   * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
 
 ## Bugs: Known bugs
-* Known bugs as of 05/11/2017 1.0.1 build
-  * Jumps to top when adding stuff
-  * Takes a long time to commit minute change for modules
-
-## Bugs: Fixed bugs
-* Bugs found/fixed as of version 1.0.0
-  * Module minute time change not committed - fixed as of 1.0.1 build
-
+* Known bugs as of 05/11/2017 1.1.1 build
+  * Colors set on wrong modules after adding new module (index issue?)
 # Change Log
 ## 1.0.1
-* Fixed bug: Module minute time change not committed
-
+* Fixed bug[1]: Module minute time change not committed
 ## 1.1.0
-* Fixed bug: Jumps to top when adding stuff
-* Fixed bug: Takes a long time to commit minute change for modules
-* Added feature: Context menu to modify module time duration
-* Added feature: Context menu to rename module entry
+* Fixed bug[2]: Jumps to top when adding stuff
+* Fixed bug[3]: Takes a long time to commit minute change for modules
+* Added feature[4]: Context menu to modify module time duration
+* Added feature[5]: Context menu to rename module entry
+## 1.1.1
+* Fixed bug[6]: Changes reverting when moving items around (indexing method was wrong) gui.js:230->266
+* Fixed bug[7]: Fixed modify time (module context menu) - using arrows after setting would reset to 0
+* Added workaround: Null entries and items will now be ignored by display process. Need to figure out why nulls occur and fix...
+* Added feature: Added entry summary as part of "End of day" row
+* Altered feature: "End of day" module now exempt from context menu
+* GUI Improvements
+  * Improved module column start position match
+  * Module time addition spinner now updates while holding down (need to test compiled)
+  * Added flipster home for prettieness (this was ridiculously time consuming?!)
+  * Improved module title labels
+* Added installer option

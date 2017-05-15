@@ -3,7 +3,6 @@ var
     path = require('path'),
     cwd = path.dirname(process.execPath), 
     settings_path = path.join(cwd,'settings');
-    console.log(settings_path);
 gt = new Array();
 
 // functions to do things with specific files
@@ -22,14 +21,12 @@ custom_cssLoad = function(file){
 }
 // check for custom settings and load them
 fs.stat(settings_path,function(err,stats){
-    if(err){ console.log("No custom setting found"); return; }
+    if(err){ return; }
     else { 
         // read directory
         fs.readdir(settings_path,function(err,files){
             if(err){ console.log("Unable to read files in settings folder."); return; }
             else {
-                console.log("Checking files...");
-                console.log(files.length + " files found");
                 for(var i=0; i<files.length; i++){
                     custom_cssLoad(files[i]);
                 }

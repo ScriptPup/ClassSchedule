@@ -80,16 +80,26 @@ function showStats(Schedule, cb){
 
 function updateTimes(entry){
     var 
+        total = 0,
         start_time = $('[id="'+entry+'"]').find('.ST_Counter').val(),
         times = $('[id="'+entry+'"]').find('.item_time'),
         t = null,
         mt = null,
+        ci = null,
         ct = moment('12-may-2014, '+start_time).format("hh:mm A");
         times.each(function(index){
-            $(this).html(ct);
+            ci = this;
+            $(this).html(ct);           
             t = $(this).attr('time');
             ct = moment('12-may-2014, '+ct).add(t,'m').format("hh:mm A");
             mt = (ct<61) ? ct +" Min." : parseFloat((ct/60).toFixed(2)) + " Hr.";
+            if($(ci).parents('.module').hasClass('summary')){
+                 $(ci).parents('.entry').find('.modTime').each(function() {      
+                    total = this.valueAsNumber + total;
+                });               
+               var st = (parseInt(total)<61) ? parseInt(total)+" Min." : parseFloat((parseInt(total)/60).toFixed(2)) + " Hr.";
+               $(ci).siblings('.classTime').html(st);
+            }
         });
 }
 
@@ -138,6 +148,7 @@ function showSchedule(Scheduler){
         nTime = null;
     $('#type').html(class_type).show();
     for(var inu=0; inu< entries.length; inu++){
+        if(entries[inu] === null){ continue; }
         var entry = entries[inu].title,
             qce = (entries[inu].hasOwnProperty('color')) ?  entries[inu].color : null,
             curTime = moment('12-may-2014, '+entries[inu].start_time).add(entries[inu].start_time,'m').format("hh:mm A"),
@@ -172,7 +183,7 @@ function showSchedule(Scheduler){
                 ;
         curEntry.items.push({ "name": "End of day", "time": 00, disabled: true });
         for(var i=0; i< curEntry.items.length; i++){
-           curEntry.items[i];
+            if(curEntry.items[i] === null){ continue; }
            var qc = (curEntry.items[i].hasOwnProperty('color')) ?  curEntry.items[i].color : null,
                 qtc = (curEntry.items[i].hasOwnProperty('font-color')) ?  curEntry.items[i]['font-color'] : null;
             nModuleTime = (curEntry.items[i].time<61) ? curEntry.items[i].time +" Min." : parseFloat((curEntry.items[i].time/60).toFixed(2)) + " Hr.";
@@ -202,11 +213,13 @@ function showSchedule(Scheduler){
                                     var
                                         nTime = $(e.target).val(),
                                         nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
-                                   ttest=e.target;
                                     $(e.target).prev().text(nTimeDisplay);
                                     $(e.target).prev().attr('time',nTime);
-                                    $(e.target).next().attr('time',nTime);                                                           
-                                    Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),nTime,function(){
+                                    $(e.target).next().attr('time',nTime);                                                         
+                                    
+                                })
+                                .on('change',function(e){
+                                    Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),$(e.target).val(),function(){
                                          updateTimes($(e.target).parents('.entry').attr('id'));
                                     });
                                 })
@@ -219,6 +232,7 @@ function showSchedule(Scheduler){
                         ;
             curTime = moment('12-may-2014, '+curTime).add(curEntry.items[i].time,'m').format("hh:mm A");
             if(curEntry.items[i].hasOwnProperty('disabled')){
+                nModule.addClass("summary");
                 nModule.find('.modTime').attr('disabled','true');
                 nModule.find('.modTime').addClass('da');
                 curEntry.items.splice(i,1);
@@ -237,15 +251,14 @@ function showSchedule(Scheduler){
                 var t = ui.item,
                     parSize = $(t).parent().children().length - 3,
                     sEnt = $(ui.item).attr('entry'),
-                    sIX = $(this).attr('prev-index')-2,
-                    dIX = ui.item.index()-2,                    
+                    sIX = $(ui.item).attr('index'),
+                    dIX = ui.item.index()-1,                    
                     dEnt = $(ui.item).parent().attr('id');
                     if(dIX >= parSize){ 
                         $(t).insertBefore($(t).prev());  
                         return;
                     }
                 toggleLoad(true);
-                $(this).removeAttr('prev-index');
                 if(sIX!==null && dIX!==null && sEnt!==null && dEnt!==null && !isNaN(dIX) && !isNaN(sIX) ){
                     console.log("Updating location...");
                     console.log("\tSchedule: "+Scheduler.data.selected_schedule);
@@ -257,9 +270,15 @@ function showSchedule(Scheduler){
                         updateTimes(sEnt);  updateTimes(dEnt);
                         toggleLoad(false);
                     });   
+                } else {
+                    console.log("Missing location information...");
+                    console.log("\tSchedule: "+Scheduler.data.selected_schedule);
+                    console.log("\tSource entry: "+sEnt +" : "+sIX);
+                    console.log("\tDestination entry: "+dEnt +" : "+dIX); 
                 }             
             }
         });
+        updateTimes(inu);
     }
     $('.header_contain').css('width', ($(window).width() - 270)+"px" );
     $('#type').on('input',function(){
@@ -296,7 +315,6 @@ function insertRow(name,entry,where,ref,Scheduler){
                 var
                     nTime = $(e.target).val(),
                     nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
-                ttest=e.target;
                 $(e.target).prev().text(nTimeDisplay);
                 $(e.target).prev().attr('time',nTime);
                 $(e.target).next().attr('time',nTime);   
