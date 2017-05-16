@@ -16,8 +16,10 @@
         <link rel="stylesheet" href="./css/jquery.flipster.min.css">
         <link rel="stylesheet" href="./css/spectrum.css">
         <link rel="stylesheet" href="./css/sp-dark.css">
-	    <link rel="stylesheet" href="./css/styles.css">
-        
+	    <link rel="stylesheet" href="./css/base_gui.css">
+        <link rel="stylesheet" href="./css/scrollbar.css">
+
+
         <script src="./js/jquery-3.1.1.min.js"></script>
         <script src="./js/initialize.js"></script>
         <script src="./js/colorpicker/spectrum.js"></script>
@@ -31,6 +33,7 @@
        <script src="./js/gui.js"></script>
     </head>
     <body>
+        <a id="export" class="disabled"></a>
         <div id="back"></div>
         <div class="top-left">
             <span class="spanned" id="title" class="title">Select Class</span>
@@ -50,8 +53,8 @@
                 <ul>
                 </ul>
                 <div class="list-nav">
-                    <span id="next-li" class="nav-arrows"><img type="image/svg+xml" src="css/img/harrow-left.svg" data="css/img/harrow-left.svg" class="right-point"></img></span>
-                    <span id="prev-li" class="nav-arrows"><img type="image/svg+xml" src="css/img/harrow-right.svg" data="css/img/harrow-right.svg" class="left-point"></img></span>
+                    <span id="prev-li" class="nav-arrows"><img type="image/svg+xml" src="css/img/harrow-left.svg" data="css/img/harrow-left.svg" class="left-point"></img></span>
+                    <span id="next-li" class="nav-arrows"><img type="image/svg+xml" src="css/img/harrow-right.svg" data="css/img/harrow-right.svg" class="right-point"></img></span>
                 </div>
             </div>            
             <div class="app">

@@ -1,0 +1,383 @@
+/*=============================================
+=            Global            				=
+=============================================*/
+body {
+	position: absolute;
+	background-color: black;
+	background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
+	background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+	background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+	color: white;
+	height: 99%;
+	width: 99%;
+	margin: 0;
+	padding: 0;
+}
+body {
+	overflow: hidden;
+}
+/* Primary center container */
+.portal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-height: 90%;
+	overflow-y: hidden;
+}
+/* Header detail spans */
+.spanned {
+	display: inline-block;
+}
+/*=============================================
+=            Home screen            =
+=============================================*/	
+.tile {
+	cursor: pointer;
+}
+.tile img:hover {
+	opacity: 0.8;
+}
+.tile:hover {
+	opacity: 0.8;
+}
+.tile a {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	width: 100%;
+	color: black;
+	text-decoration: none;
+	background: rgba(185, 190, 204, 0.75);
+	font-size: x-large;
+}
+/* Link for creating new class */
+.new_class {
+	font-size: 0.5em;
+	text-decoration: underline;
+	cursor: pointer;
+	display: block;
+}
+.new_class:hover {
+	color: grey;
+}
+/* Container for left-aligned parts */
+.top-left {
+	position: absolute;
+	left: 20;
+	top: 20;
+	font-size: xx-large;
+}
+#export {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 32px;
+	height: 32px;
+	background: url('./img/export.png');
+	cursor: pointer;
+}
+#export.disabled { 
+	background: url('./img/export-disabled.png');
+	cursor: initial;
+}
+#export.enabled:hover { 
+	background: url('./img/export-hover.png');
+}
+
+/* Back button style */
+#back {
+	position: absolute;
+	right: 56px;
+	top: 20px;
+	width: 32px;
+	height: 32px;
+	background: url('./img/back.png');
+	cursor: pointer;
+}
+#back:hover {
+	background: url('./img/back-hover.png');
+}
+.list {
+	text-align: center;
+	overflow: hidden;
+}
+.list>ul {
+	display: block;
+}
+/* Module Attributes */	
+/*=====  End of Home screen  ======*/
+	
+	
+	
+/*=============================================
+= Set up input options for modules and entry times =
+=============================================*/	
+/* Simmi-transparent up/down arrows on time and number inputs */
+input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+	opacity: 0.5;
+}
+/* Disable all buttons on inputs with .da class (used exclusivley for disabled modules) */
+.da::-webkit-inner-spin-button, .da::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+/* Don't display x (clear) button on time inputs */
+input[type="time"]::-webkit-clear-button {
+	display: none;
+}
+/* Make start-time inputs appear simple and transparent  */
+.start_time input {
+	background: transparent;
+	border: none;
+	color: white;
+}
+/* Don't show annoying outline when selected */
+.start_time input:focus { outline:0; }	
+/*=====  End of Set up input options for modules and entry times  ======*/
+
+
+/*=============================================
+=            Entry and module row style       =
+=============================================*/	
+/* Primary container for entries and modules (.portal.extended is the full element class)  */
+.extended {
+	position: absolute;
+	top: 50%;
+	left: 60%;
+	transform: translate(-50%, -50%);
+	max-height: 90%;
+	min-width: 500px;
+	overflow-y: auto;
+	border-left: 1px white solid;
+	padding: 5px;
+}
+/* Style for entry day-start time counter */
+.module {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+100&0.8+0,0.7+100 */
+	background: -moz-linear-gradient(-45deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#b37d7e7d', endColorstr='#cc0e0e0e', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
+	margin-top: 2;
+	margin-bottom: 2;
+	border-radius: 2;
+	padding-left: 20px;
+	width: 100%;
+}
+/* Style for entry/day start-time container */
+.start_time {
+	display: inline-block;
+	width: 20%;
+}
+/* Style for entry/day start-time input field */
+.ST_Counter {
+	font-size: x-large;
+}
+/* Contains .entry_label  */
+span.header_contain {
+	display: block;
+	height: 31px;
+}
+/* Style for entry/day header 
+NOTE: selected font color will always override this */
+.entry_label {
+	display: inline-block;
+	width: 80%;
+	font-size: x-large;
+	cursor: pointer;
+}
+/* Style for module-name */
+.module_name {
+	display: inline-block;
+	width: 50%;
+}
+/* Style for module-time */
+.module_time {
+	display: inline-block;
+	width: 80px;
+}
+/* Field displaying when the module is expected to be started */
+.item_time {
+	margin-left: 16%;
+}
+
+/*----------  Private styles (Don't include in templates)  ----------*/
+/* The cursor will be changed to a pointer except for the last module (disabled module) */
+.entry>div {
+	margin-left: 20px;
+}
+.module:not(:last-child) {
+	cursor: pointer;
+}
+input.modTime {
+	position: absolute;
+	display: inline-block;
+	width: 20px;
+	background: transparent;
+	border: none;
+	color: transparent;
+}
+/* Highlight module when hovered over */
+.module:not(:last-child):hover {
+	-webkit-box-shadow: inset 0px 0px 24px 0px;
+	-moz-box-shadow: inset 0px 0px 24px 0p;
+	box-shadow: inset 0px 0px 24px 0px;
+}
+.modTime:focus, #schedules:focus, #hours_in_day:focus {
+	outline: none;
+}
+/*=====  End of Entry and module row style  ======*/
+	
+	
+	
+/*=============================================
+=            Interactive components           =
+=============================================*/	
+/* Used to define class-type (ILT/VILT/etc) */
+#type {
+	display: none;
+	position: absolute;
+	bottom: 20;
+	left: 20;
+}
+/* Contains #schedules */
+.schedule_contain {
+	display: none;
+	font-size: large;
+}
+
+/* Used to select current schedule */
+#schedules {
+	display: none;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+100&0.8+0,0.7+100 */
+	background: -moz-linear-gradient(-45deg, rgba(14, 14, 14, 0.8) 0%, rgba(125, 126, 125, 0.7) 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(14, 14, 14, 0.8) 0%, rgba(125, 126, 125, 0.7) 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(14, 14, 14, 0.8) 0%, rgba(125, 126, 125, 0.7) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#cc0e0e0e', endColorstr='#b37d7e7d', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
+	border-radius: 10px;
+	color: white;
+}
+#schedules option {
+	background: -webkit-linear-gradient(bottom left, rgba(14, 14, 14, 0.8) 0%, rgba(125, 126, 125, 0.7) 100%);
+}
+/* Container of #hours_container */
+.options {
+	font-size: initial;
+	margin-left: 1px;
+}
+/* Container of #hours_in_day */
+#hours_container {
+	display: none;
+}
+/* Used to define how many hours in a day are expected */
+
+#hours_in_day {
+	display: none;
+	width: 40px;
+	background: transparent;
+	color: white;
+	border: none;
+}
+
+
+/* Home flip-flipster button styles */
+.nav-arrows {
+	height: 32px;
+	cursor: pointer;
+}
+.nav-arrows:hover {
+	opacity: 0.8;
+}
+.list-nav {
+	display: none;
+}
+
+/* Form styling used for popups */
+.uiForm {
+	position: absolute;
+}
+#new_schedule_clicker {
+	margin-left: 5px;
+}
+button {
+	border-radius: 8px;
+	opacity: 0.9;
+	background: transparent;
+	color: white;
+	border: 1px;
+	cursor: pointer;
+}
+button:hover {
+	-webkit-box-shadow: inset 0px 0px 4px 0px;
+	-moz-box-shadow: inset 0px 0px 4px 0p;
+	box-shadow: inset 0px 0px 4px 0px;
+	text-decoration: underline;
+}	
+/*----------  New class form section  ----------*/	
+/* Used to style "Select image" button when creating a new class */
+.btn {
+	display: inline-block;
+	padding: 3px 6px;
+	margin-bottom: 0;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 1px;
+}
+.btn-overlay {
+	color: #fff;
+	background-color: rgba(38, 37, 45, 0.73);
+	border-color: rgba(22, 37, 45, 0.73);
+}
+.fileinput-button {
+	position: relative;
+	overflow: hidden;
+}
+.fileinput-button input {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	font-size: 200px;
+	direction: ltr;
+	cursor: pointer;
+}
+/*----------  New class form section close  ----------*/		
+/*=====  End of Interactive components  ======*/
+	
+	
+/*=============================================
+=            Other Class Components            =
+=============================================*/
+#days {
+	display: none;
+}
+	
+/*=====  End of Other Class Components  ======*/
+	
+	
+	
+	
+	

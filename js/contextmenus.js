@@ -20,7 +20,7 @@ contextMenuFunctions = {
 		} else {
 			var tar = $(ui.target).parent();
 		}
-		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+		var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
 			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />'))
 			.on('keydown', function (e) {
 				if (e.which == 13) {
@@ -67,10 +67,11 @@ contextMenuFunctions = {
 		if (ui.target.tagName !== 'DIV') {
 			var tar = $(ui.target).parent();
 		} else {
-			var tar = $(ui.target).parent();
+			var tar = $(ui.target);
 		}
-		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
-			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />'))
+		test = tar;
+		var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
+			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />').val($(tar).children('.module_name').html()))			
 			.on('keydown', function (e) {
 				if (e.which == 13) {
 					$('#submit_new').click();
@@ -81,14 +82,14 @@ contextMenuFunctions = {
 			})
 			.css('left', event.pageX)
 			.css('top', (event.pageY) - 50)
-			.append($('<button style="display: inline;" id="submit_new">Add</button>')
+			.append($('<button style="display: inline;" id="submit_new">Add</button>')				
 				.on('click', function () {
 					var ent = $(tar).parents('.entry').attr('id'),
 						ix = $(tar).attr('index'),
 						key = "name",
 						value = $('#new_module').val();
 					Schedule.changeItm(Schedule.data.selected_schedule,ent,ix,key,value,function(){
-						$(tar).children('.class_name').html(value);
+						$(tar).children('.module_name').html(value);
 						reIndex();
 						$('#new_module_dialog').remove();
 					});
@@ -108,7 +109,7 @@ contextMenuFunctions = {
 		} else {
 			var tar = $(ui.target).parent();
 		}
-		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+		var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
 			.append($('<input style="display: inline;" type="number" name="new_module" id="new_module" />'))
 			.on('keydown', function (e) {
 				if (e.which == 13) {
@@ -131,10 +132,11 @@ contextMenuFunctions = {
 							nTime = value,
 							nTimeDisplay = (nTime<61) ? (nTime) +" Min." : parseFloat((nTime/60).toFixed(2)) + " Hr.";
 						
-						$(tar).children('.classTime').text(nTimeDisplay);
-						$(tar).children('.classTime').attr('time',nTime);
+						$(tar).children('.module_time').text(nTimeDisplay);
+						$(tar).children('.module_time').attr('time',nTime);
 						$(tar).children('.item_time').attr('time',nTime);
 						$(tar).children('.modTime').val(nTime);
+						updateTimes($(tar).parents('.entry').attr('id'));
 						$('#new_module_dialog').remove();
 					});
 					
@@ -144,8 +146,7 @@ contextMenuFunctions = {
 					$('#new_module_dialog').remove();
 				}));	
 			$('body').append(nMod);
-			$('#new_module').focus();
-			updateTimes($(tar).parents('.entry').attr('id'));
+			$('#new_module').focus();			
 	},
     // Entries menu items
     deleteEntry: function (event, ui) {
@@ -155,7 +156,6 @@ contextMenuFunctions = {
 		} else {
 			tar = $(ui.target);
 		}
-        alert("Deleted day "+$(tar).attr('id'));
 		Schedule.deleteEntry(Schedule.data.selected_schedule, $(tar).attr('id'), function () {
 			$(tar).remove();
 			reIndex();
@@ -171,7 +171,7 @@ contextMenuFunctions = {
         var where = "below";
         // Need to add another option here for non-positional addition of entries?
 
-        var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+        var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
 			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />'))
 			.on('keydown', function (e) {
 				if (e.which == 13) {
@@ -189,7 +189,6 @@ contextMenuFunctions = {
 						ref = tar,
 					    addTO = (where === 'above') ? 1 : -1,
 					    nIx = (Number($(ref).attr('id')) + addTO);
-                    console.log(ref);
 					insertEntry(nIx, where, ref);
                     reIndex();
 					$('#new_module_dialog').remove();
@@ -215,8 +214,8 @@ contextMenuFunctions = {
         var where = "below";
         // Need to add another option here for non-positional addition of entries?
 
-        var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
-			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />'))
+        var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
+			.append($('<input style="display: inline;" type="text" name="new_module" id="new_module" />').val($(tar).find('.entry_label').html()))
 			.on('keydown', function (e) {
 				if (e.which == 13) {
 					$('#submit_new').click();
@@ -233,7 +232,6 @@ contextMenuFunctions = {
 						ref = tar,
 					    addTO = (where === 'above') ? 1 : -1,
 					    nIx = (Number($(ref).attr('id')));
-                    console.log(ref);
 					$(tar).children('.entry_label').html(name);
                     reIndex();
 					$('#new_module_dialog').remove();
@@ -269,6 +267,9 @@ EntriesMenu = [
     {title: "---"},
     {title: "New Day", action: contextMenuFunctions.insertEntry},
 	{title: "Change Color <input type='text' id='pickcolor' size=2 />", addClass: "colorer" }                 
+];
+DisabledMenu = [
+{title: "Insert Above", action: contextMenuFunctions.insertModAbove }
 ]
 
 
@@ -287,7 +288,9 @@ contextMenu = {
 				var tar = $(ui.target).parent();
 			} else { var tar = $(ui.target); }
 			if( $(tar).children('.modTime ').attr('disabled') === 'disabled' ){
-				return false;
+				context = "Disabled";
+				$(document).contextmenu("replaceMenu", DisabledMenu);
+				return;
 			}
             context = "module";
 			$(document).contextmenu("replaceMenu", ModulesMenu);
@@ -327,7 +330,6 @@ contextMenu = {
 						$(tar).css('background',color.toRgbString());
 					} else { $(tar).css('background',''); }
 				} else if (context === "entry"){
-					console.log($(tar).children('.header_contain'));
 					if(color){
 						$(tar).children('.header_contain').css('background',color.toRgbString());
 					} else { $(tar).children('.header_contain').css('background',''); }
@@ -357,6 +359,6 @@ contextMenu = {
 	}
 }
 
-    $(document).contextmenu(contextMenu);
+$(document).contextmenu(contextMenu);
 }
 

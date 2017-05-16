@@ -78,7 +78,7 @@ Schedule.prototype = {
             fs.writeFile(Self.path,JSON.stringify(workingSet),function(err,data){                
                 if(err){ alert("Failed to save changes"); } else {}
                 cb();
-            });
+            });            
     },
     updateScheduleSelect(schedSelected,cb){
         var Self = this,

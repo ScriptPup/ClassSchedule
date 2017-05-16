@@ -46,15 +46,6 @@ To package the application
 * Editable class type
 
 ## Features: Planned
-* Per-class css themes?
-* Improve program opening speed
-  * Possibly create installer option
-  * Possibly eliminate some nw dependancies?
-* Decrease .exe size
-  * Requires research
-* Distribution system?
-  * Possibly add online or hosted class distro system to share between trainers
-  * Probably won't happen
 * GUI improvmenets
   * Add condition to change text color to black if background is light? 
   * Highlight over-time modules in red?
@@ -63,21 +54,28 @@ To package the application
   * Ability to add file-links within notes
 * Entry focus
   * Add entries to left-hand side so that a single entry may be selected and focused on to eliminate distractions
+* Per-class css themes?
+* Need to research further - but probably not possible
+  * Improve program opening speed
+  * Decrease .exe size
+* Distribution system?
+  * Possibly add online or hosted class distro system to share between trainers
+  * Probably won't happen
 
 ## Bugs: Known bugs
-* Known bugs as of 05/11/2017 1.1.1 build
-  * Colors set on wrong modules after adding new module (index issue?)
+* Known bugs as of 05/11/2017 1.2.1 build
+  * None
 # Change Log
 ## 1.0.1
-* Fixed bug[1]: Module minute time change not committed
+* Fixed bug: Module minute time change not committed
 ## 1.1.0
-* Fixed bug[2]: Jumps to top when adding stuff
-* Fixed bug[3]: Takes a long time to commit minute change for modules
-* Added feature[4]: Context menu to modify module time duration
-* Added feature[5]: Context menu to rename module entry
-## 1.1.1
-* Fixed bug[6]: Changes reverting when moving items around (indexing method was wrong) gui.js:230->266
-* Fixed bug[7]: Fixed modify time (module context menu) - using arrows after setting would reset to 0
+* Fixed bug: Jumps to top when adding stuff
+* Fixed bug: Takes a long time to commit minute change for modules
+* Added feature: Context menu to modify module time duration
+* Added feature: Context menu to rename module entry
+## 1.2.0
+* Fixed bug: Changes reverting when moving items around (indexing method was wrong) gui.js:230->266
+* Fixed bug: Fixed modify time (module context menu) - using arrows after setting would reset to 0
 * Added workaround: Null entries and items will now be ignored by display process. Need to figure out why nulls occur and fix...
 * Added feature: Added entry summary as part of "End of day" row
 * Altered feature: "End of day" module now exempt from context menu
@@ -87,3 +85,9 @@ To package the application
   * Added flipster home for prettieness (this was ridiculously time consuming?!)
   * Improved module title labels
 * Added installer option
+## 1.3.0
+* Fixed bug: Colors set on wrong modules after adding new module (index issue?)
+* Fixed bug: Moving modules between entries screws everything up
+* Fixed bug: Using context menu to update time fails to update times of modules below
+* Added schedule export feature
+* When altering names, pre-populate form with current name

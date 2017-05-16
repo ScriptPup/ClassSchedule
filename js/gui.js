@@ -31,7 +31,7 @@ function showStats(Schedule, cb){
         $('<button id="new_schedule_clicker">Add</button>')
             .on('click',function(e){
                 $('#new_schedule_dialog').remove();
-                var nMod = $('<div id="new_schedule_dialog" class="scheduleForm"></div>')
+                var nMod = $('<div id="new_schedule_dialog" class="uiForm"></div>')
                     .append($('<input style="display: inline;" type="text" name="new_schedule" id="new_schedule" />'))
                         .on('keydown',function(e){
                             if(e.which == 13) {
@@ -76,8 +76,7 @@ function showStats(Schedule, cb){
         $('.schedule_contain').show();
         $('.list').hide();
         cb(Schedule);        
-}
-
+};
 function updateTimes(entry){
     var 
         total = 0,
@@ -98,10 +97,10 @@ function updateTimes(entry){
                     total = this.valueAsNumber + total;
                 });               
                var st = (parseInt(total)<61) ? parseInt(total)+" Min." : parseFloat((parseInt(total)/60).toFixed(2)) + " Hr.";
-               $(ci).siblings('.classTime').html(st);
+               $(ci).siblings('.module_time').html(st);
             }
         });
-}
+};
 
 function toggleLoad(set){
     if(set){
@@ -112,7 +111,7 @@ function toggleLoad(set){
         $('.ui').off('mousedown', function(){ return false; });
         $('.ui').css('cursor',null);
     }
-}
+};
 
 function reIndex(){
     var eix = 0;
@@ -121,13 +120,137 @@ function reIndex(){
         $(this).attr('id',eix);
         $(this).find('.module').each(function(index2){
             $(this).attr('index',ix);
-            $(this).find('.modTime').attr('index',ix);
+            $(this).attr('entry',$(this).parents('.entry').attr('id'));
+            $(this).find('.modTime').attr('index',ix);            
             ix++;
         });
         eix++;
     });
     
-}
+};
+
+function exportClass(Scheduler){    
+    var 
+        fs = require('fs'),
+        path = require('path'),
+        cwd = path.dirname(process.execPath),
+        style = fs.readFileSync(path.join(cwd,"settings","flat_gui.css"),{encoding: 'utf8'}),
+        Schedule = Scheduler.data.scheduled[Scheduler.data.selected_schedule],
+        class_type = Schedule.class_type,
+        entries = Schedule.entries,
+        curEntry = null,
+        nEntry = null,
+        nModuleTime = null,
+        nModuleTimeHolder = null;
+        nModuleNameHolder = null;
+        nModule = null,
+        curTime = null,
+        nTime = null,
+        app = document.createElement('div');
+        app.classList.add('flat_UI');
+    for(var inu=0; inu< entries.length; inu++){
+        if(entries[inu] === null){ continue; }
+        var entry = entries[inu].title,
+            qce = (entries[inu].hasOwnProperty('color')) ?  entries[inu].color : null,
+            curTime = moment('12-may-2014, '+entries[inu].start_time).add(entries[inu].start_time,'m').format("hh:mm A"),
+            curEntry = entries[inu],
+            nEntry = $('<div></div>')
+                .addClass('entry')
+                .attr('id',inu)
+                .append($('<span></span>')
+                    .addClass('header_contain')
+                    .css('background',qce)
+                    .append($('<span></span>')                    
+                    .text(entry)
+                    .addClass('entry_label')
+                    .addClass('header')
+                    )   
+                    .append($('<span></span>')
+                        .append($('<input class="ST_Counter" id="'+entry+'_time" type="time">')
+                            .val(entries[inu].start_time)
+                            .on('change',function(e){
+                                var ent = $(e.target).parents('.entry').attr('id'),
+                                    time = $(e.target).val();
+                                v = e.target;
+                                Scheduler.updateModStart(Scheduler.data.selected_schedule,ent,time,function(){
+                                    updateTimes(ent);
+                                });
+                            })
+                        )                    
+                        .addClass('start_time')
+                        .addClass('header')
+                    )
+                )
+                ;
+        curEntry.items.push({ "name": "End of day", "time": 00, disabled: true });
+        for(var i=0; i< curEntry.items.length; i++){
+            if(curEntry.items[i] === null){ continue; }
+           var qc = (curEntry.items[i].hasOwnProperty('color')) ?  curEntry.items[i].color : null,
+                qtc = (curEntry.items[i].hasOwnProperty('font-color')) ?  curEntry.items[i]['font-color'] : null;
+            nModuleTime = (curEntry.items[i].time<61) ? curEntry.items[i].time +" Min." : parseFloat((curEntry.items[i].time/60).toFixed(2)) + " Hr.";
+            nModule = $('<div></div>')
+                        .addClass('module')
+                        .attr('entry',inu)
+                        .attr('index',i)
+                        .attr('id',curEntry.items[i].name)
+                        .css('background',qc)
+                        .css('color',qtc)
+                        .append($('<span></span>')
+                            .text(curEntry.items[i].name)
+                            .addClass('module_name')
+                            .addClass('moduleAttrib')                            
+                        )
+                        .append($('<span></span>')                            
+                            .text(nModuleTime)    
+                            .attr('time',curEntry.items[i].time)                        
+                            .addClass('module_time')
+                            .addClass('moduleAttrib')
+                        )
+                        .append($('<input class="modTime" type="number">')                                
+                                .attr('index',i)
+                                .addClass("item_minutes")
+                                .val(curEntry.items[i].time)
+                                .on('input',function(e){
+                                    var
+                                        nTime = $(e.target).val(),
+                                        nTimeDisplay = ($(e.target).val()<61) ? ($(e.target).val()) +" Min." : parseFloat(($(e.target).val()/60).toFixed(2)) + " Hr.";
+                                    $(e.target).prev().text(nTimeDisplay);
+                                    $(e.target).prev().attr('time',nTime);
+                                    $(e.target).next().attr('time',nTime);                                                         
+                                    
+                                })
+                                .on('change',function(e){
+                                    Scheduler.updateModDur(Scheduler.data.selected_schedule,$(e.target).parents('.entry').attr('id'),$(e.target).attr('index'),$(e.target).val(),function(){
+                                         updateTimes($(e.target).parents('.entry').attr('id'));
+                                    });
+                                })
+                        )
+                        .append($('<span></span>')
+                            .addClass('item_time')
+                            .text(curTime)
+                            .attr('time',curEntry.items[i].time)   
+                        )
+                        ;
+            curTime = moment('12-may-2014, '+curTime).add(curEntry.items[i].time,'m').format("hh:mm A");
+            if(curEntry.items[i].hasOwnProperty('disabled')){
+                nModule.addClass("summary");
+                nModule.find('.modTime').attr('disabled','true');
+                nModule.find('.modTime').addClass('da');
+                curEntry.items.splice(i,1);
+            }            
+            nEntry.append(nModule);
+        }
+        $(app).append(nEntry);
+    }
+    var expt = "<html><head><style>" + style + "</style></head><body><header class='stretch_header'>" + Scheduler.data.class_info.name + " - " + Scheduler.data.selected_schedule + " - " + Scheduler.data.class_info.days + " days</header>" + app.outerHTML + "</body></html>";
+    $('#export').removeClass('disabled');
+    $('#export').addClass('enabled');
+    $('#export').off('click');
+    $('#export').on('click',function(){
+        $(this).attr('download',Scheduler.data.class_info.name + "_" +Scheduler.data.selected_schedule);
+        this.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(expt);
+    });
+};
 
 function showSchedule(Scheduler){
     scheduleStatus = "shown";
@@ -196,13 +319,13 @@ function showSchedule(Scheduler){
                         .css('color',qtc)
                         .append($('<span></span>')
                             .text(curEntry.items[i].name)
-                            .addClass('class_name')
+                            .addClass('module_name')
                             .addClass('moduleAttrib')                            
                         )
                         .append($('<span></span>')                            
                             .text(nModuleTime)    
                             .attr('time',curEntry.items[i].time)                        
-                            .addClass('classTime')
+                            .addClass('module_time')
                             .addClass('moduleAttrib')
                         )
                         .append($('<input class="modTime" type="number">')                                
@@ -244,38 +367,37 @@ function showSchedule(Scheduler){
         $('.entry').sortable({
             items: "> div:not(:last)",
             connectWith: '.entry',
-            start: function (event, ui){
-                $(this).attr('prev-index', ui.item.index());
-            },
-            update: function(event,ui){ 
-                var t = ui.item,
-                    parSize = $(t).parent().children().length - 3,
-                    sEnt = $(ui.item).attr('entry'),
-                    sIX = $(ui.item).attr('index'),
-                    dIX = ui.item.index()-1,                    
-                    dEnt = $(ui.item).parent().attr('id');
-                    if(dIX >= parSize){ 
-                        $(t).insertBefore($(t).prev());  
-                        return;
-                    }
-                toggleLoad(true);
-                if(sIX!==null && dIX!==null && sEnt!==null && dEnt!==null && !isNaN(dIX) && !isNaN(sIX) ){
-                    console.log("Updating location...");
-                    console.log("\tSchedule: "+Scheduler.data.selected_schedule);
-                    console.log("\tSource entry: "+sEnt +" : "+sIX);
-                    console.log("\tDestination entry: "+dEnt +" : "+dIX); 
-                                            
-                    Scheduler.updateLocation(Scheduler.data.selected_schedule,sEnt,sIX,dEnt,dIX,function(){
-                        reIndex();
-                        updateTimes(sEnt);  updateTimes(dEnt);
-                        toggleLoad(false);
-                    });   
-                } else {
-                    console.log("Missing location information...");
-                    console.log("\tSchedule: "+Scheduler.data.selected_schedule);
-                    console.log("\tSource entry: "+sEnt +" : "+sIX);
-                    console.log("\tDestination entry: "+dEnt +" : "+dIX); 
-                }             
+            update: function(event,ui){
+                if (this === ui.item.parent()[0]) {      
+                    var t = ui.item,
+                        parSize = $(t).parent().children().length - 3,
+                        sEnt = $(ui.item).attr('entry'),
+                        sIX = $(ui.item).attr('index'),
+                        dIX = ui.item.index()-1,                    
+                        dEnt = $(ui.item).parent().attr('id');
+                        if(dIX >= parSize){ 
+                            $(t).insertBefore($(t).prev());
+                            dIX--;
+                        }
+                    toggleLoad(true);
+                    if(sIX!==null && dIX!==null && sEnt!==null && dEnt!==null && !isNaN(dIX) && !isNaN(sIX) ){
+                        console.log("Updating location...");
+                        console.log("\tSchedule: "+Scheduler.data.selected_schedule);
+                        console.log("\tSource entry: "+sEnt +" : "+sIX);
+                        console.log("\tDestination entry: "+dEnt +" : "+dIX); 
+                                                
+                        Scheduler.updateLocation(Scheduler.data.selected_schedule,sEnt,sIX,dEnt,dIX,function(){
+                            reIndex();
+                            updateTimes(sEnt);  updateTimes(dEnt);
+                            toggleLoad(false);
+                        });   
+                    } else {
+                        console.log("Missing location information...");
+                        console.log("\tSchedule: "+Scheduler.data.selected_schedule);
+                        console.log("\tSource entry: "+sEnt +" : "+sIX);
+                        console.log("\tDestination entry: "+dEnt +" : "+dIX); 
+                    }             
+                }
             }
         });
         updateTimes(inu);
@@ -286,7 +408,8 @@ function showSchedule(Scheduler){
 
         });
     });
-}
+    exportClass(Scheduler);
+};
 
 function insertRow(name,entry,where,ref,Scheduler){    
     var addTO = (where === 'above') ? 1 : -1
@@ -297,12 +420,12 @@ function insertRow(name,entry,where,ref,Scheduler){
         .attr('index',nIx)
         .attr('id',name)
         .append($('<span></span')
-            .addClass('class_name')
+            .addClass('module_name')
             .addClass('moduleAttrib')
             .text(name)
         )
         .append($('<span></span')
-            .addClass('classTime')
+            .addClass('module_time')
             .addClass('moduleAttrib')
             .text('0 Min.')
         )
@@ -333,8 +456,8 @@ function insertRow(name,entry,where,ref,Scheduler){
         }
         else if(where === "below"){
             newThing.insertAfter(ref);
-        }
-}
+        };
+};
 
 function insertEntry(entry,where,ref){    
     var addTO = (where === 'above') ? 1 : -1
@@ -363,15 +486,15 @@ function insertEntry(entry,where,ref){
                 );
                 $('.app').append(nEntry)
         
-}
+};
 
 function newClass(event,Sched){
     	var tar = event.target;
         $('#new_module_dialog').remove();
-		var nMod = $('<div id="new_module_dialog" class="moduleForm"></div>')
+		var nMod = $('<div id="new_module_dialog" class="uiForm"></div>')
             .append($('<h2>New Class</h3>'))
             .append($('<hr />'))
-			.append($('<input style="display: block;" type="text" name="class_name" id="class_name" placeholder="Class Name: Linux 101" />'))            
+			.append($('<input style="display: block;" type="text" name="module_name" id="module_name" placeholder="Class Name: Linux 101" />'))            
             .append($('<span class="btn btn-overlay fileinput-button"><span>Select Image (.png only)</span><input type="file" accept="image/x-png" name="class_image" id="class_image"></span>'))
 			.append($('<input style="display: block;" type="text" name="class_type" id="class_type" placeholder="Class Type: Instructor Lead" />'))            
             .append($('<input style="display: block;" type="number" name="class_days" id="class_days" placeholder="Class Days: 5 " />'))
@@ -391,7 +514,7 @@ function newClass(event,Sched){
                     }
                     else { 
                         toggleLoad(true);
-                        Sched.newClass($('#new_module_dialog #class_name').val(),$('#new_module_dialog #class_type').val(),$('#new_module_dialog #class_days').val(),$('#new_module_dialog #class_schedule').val(),$('#new_module_dialog #class_image').val(),function(res){
+                        Sched.newClass($('#new_module_dialog #module_name').val(),$('#new_module_dialog #class_type').val(),$('#new_module_dialog #class_days').val(),$('#new_module_dialog #class_schedule').val(),$('#new_module_dialog #class_image').val(),function(res){
                             $('#new_module_dialog').remove();
                             toggleLoad(false);
                             window.location.reload();
@@ -416,5 +539,5 @@ function newClass(event,Sched){
 			});               ;            
 		$('body').append(nMod);
 		$('#new_module').focus();
-}
+};
 
