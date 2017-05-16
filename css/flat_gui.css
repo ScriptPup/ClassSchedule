@@ -13,9 +13,6 @@ body {
 	margin: 0;
 	padding: 0;
 }
-body {
-	overflow: hidden;
-}
 /* Primary center container */
 .portal {
 	position: absolute;
@@ -27,7 +24,7 @@ body {
 }
 /* Header detail spans */
 .stretch_header {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
     font-size: xx-large;
     text-align: center;
     display: block;
