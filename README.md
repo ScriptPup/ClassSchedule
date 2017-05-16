@@ -49,6 +49,7 @@ To package the application
 * GUI improvmenets
   * Add condition to change text color to black if background is light? 
   * Highlight over-time modules in red?
+  * When renaming module or entry, auto-fill input with current name
 * Module details
   * Add ability to add notes to module (make module expandable)
   * Ability to add file-links within notes
@@ -63,8 +64,14 @@ To package the application
   * Probably won't happen
 
 ## Bugs: Known bugs
+<<<<<<< HEAD
 * Known bugs as of 05/11/2017 1.2.1 build
   * None
+=======
+* Known bugs as of 05/11/2017 1.2.0 build
+  * Colors set on wrong modules after adding new module (index issue?) - CONFIRMED ISSUE STILL EXISTS
+  * Times not fully updating after manually setting module time
+>>>>>>> 6c0ed4511c02e5e86be94bbc1ac46fa917b5ac14
 # Change Log
 ## 1.0.1
 * Fixed bug: Module minute time change not committed
@@ -85,9 +92,12 @@ To package the application
   * Added flipster home for prettieness (this was ridiculously time consuming?!)
   * Improved module title labels
 * Added installer option
+<<<<<<< HEAD
 ## 1.3.0
 * Fixed bug: Colors set on wrong modules after adding new module (index issue?)
 * Fixed bug: Moving modules between entries screws everything up
 * Fixed bug: Using context menu to update time fails to update times of modules below
 * Added schedule export feature
 * When altering names, pre-populate form with current name
+=======
+>>>>>>> 6c0ed4511c02e5e86be94bbc1ac46fa917b5ac14
