@@ -18,6 +18,7 @@ if(!Array.prototype.move) {
 
 var 
     fs = require('fs'),
+    mkdirp = require('mkdirp'),
     template = require('../files/template.json')
     path = require('path'),
     moment = require('moment'),
@@ -212,28 +213,30 @@ Schedule.prototype = {
         tmp.scheduled[schedule_name] = scheduled;
         delete tmp.scheduled.TEMPLATE_SCHEDULE;
 
-        fs.writeFile(path.join(schedules_path,name+".json"),JSON.stringify(tmp),function(err,data){
-            if(err){ alert("Failed to save changes"); cb(); }
-            else {
-                if(img && img !== ''){
-                    fs.lstat(img,function(err,inf){
-                        if(!err && inf.isFile()){
-                            var inStr = fs.createReadStream(img),
-                                outStr = fs.createWriteStream(path.join(schedules_path,name+".png"));
-                                inStr.on('error',function(err){
-                                    alert(err);
-                                });
-                                outStr.on('error',function(err){
-                                    alert(err);
-                                });
-                                outStr.on("close", function(ex) {
-                                    cb();
-                                });
-                                inStr.pipe(outStr);
-                        }                        
-                    });
-                }
-            }            
+        mkdirp(path.join(schedules_path,name),function(err){        
+            fs.writeFile(path.join(schedules_path,name,name+".json"),JSON.stringify(tmp),function(err,data){
+                if(err){ alert("Failed to save changes"); cb(); }
+                else {
+                    if(img && img !== ''){
+                        fs.lstat(img,function(err,inf){
+                            if(!err && inf.isFile()){
+                                var inStr = fs.createReadStream(img),
+                                    outStr = fs.createWriteStream(path.join(schedules_path,name,name+".png"));
+                                    inStr.on('error',function(err){
+                                        alert(err);
+                                    });
+                                    outStr.on('error',function(err){
+                                        alert(err);
+                                    });
+                                    outStr.on("close", function(ex) {
+                                        cb();
+                                    });
+                                    inStr.pipe(outStr);
+                            }                        
+                        });
+                    } else { cb(); }
+                }            
+            });
         });
     }
 
