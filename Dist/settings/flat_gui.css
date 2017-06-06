@@ -1,0 +1,113 @@
+/*=============================================
+=            Global            				=
+=============================================*/
+body {
+	position: absolute;
+	background-color: black;
+	background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px), radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px), radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 40px), radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 30px);
+	background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+	background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+	color: white;
+	height: 99%;
+	width: 99%;
+	margin: 0;
+	padding: 0;
+}
+/* Primary center container */
+.portal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-height: 90%;
+	overflow-y: hidden;
+}
+/* Header detail spans */
+.stretch_header {
+    margin-bottom: 20px;
+    font-size: xx-large;
+    text-align: center;
+    display: block;
+    width: 100%;
+    background: grey;
+}
+/*=============================================
+=            Home screen            =
+=============================================*/	
+/*=============================================
+=            Entry and module row style       =
+=============================================*/	
+/* Primary container for entries and modules (.portal.extended is the full element class)  */
+.extended {
+	position: absolute;
+	top: 50%;
+	left: 60%;
+	transform: translate(-50%, -50%);
+	max-height: 90%;
+	min-width: 500px;
+	overflow-y: auto;
+	border-left: 1px white solid;
+	padding: 5px;
+}
+/* Style for entry day-start time counter */
+.module {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+100&0.8+0,0.7+100 */
+	background: -moz-linear-gradient(-45deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(125, 126, 125, 0.7) 0%, rgba(14, 14, 14, 0.8) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#b37d7e7d', endColorstr='#cc0e0e0e', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
+	margin-top: 2;
+	margin-bottom: 2;
+	border-radius: 2;
+	padding-left: 20px;
+	width: 100%;
+}
+/* Style for entry/day start-time container */
+.start_time {
+	display: inline-block;
+	width: 20%;
+}
+/* Style for entry/day start-time input field */
+.ST_Counter {
+	font-size: x-large;
+}
+/* Contains .entry_label  */
+span.header_contain {
+	display: block;
+	height: 31px;
+}
+/* Style for entry/day header 
+NOTE: selected font color will always override this */
+.entry_label {
+	display: inline-block;
+	width: 80%;
+	font-size: x-large;
+	cursor: pointer;
+}
+/* Style for module-name */
+.module_name {
+	display: inline-block;
+	width: 50%;
+}
+/* Style for module-time */
+.module_time {
+	display: inline-block;
+	width: 80px;
+}
+/* Field displaying when the module is expected to be started */
+.item_time {
+	margin-left: 16%;
+}
+/*----------  Private styles (Don't include in templates)  ----------*/
+/* The cursor will be changed to a pointer except for the last module (disabled module) */
+.entry>div {
+	margin-left: 20px;
+}
+input.modTime, input {
+	display: none;
+}
+/*=====  End of Entry and module row style  ======*/
