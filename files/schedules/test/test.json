@@ -1,0 +1,32 @@
+{
+	"selected_schedule": "Example",
+	"class_info": {
+		"name": "Example",
+		"days": "4",
+		"hours_in_day": 9
+	},
+	"scheduled": {
+		"test": {
+			"class_type": "Instructor Lead",
+			"updated": 1495121337251,
+			"entries": [{
+					"title": "Day 1",
+					"start_time": "08:00",
+					"items": []
+				}, {
+					"title": "Day 2",
+					"start_time": "08:00",
+					"items": []
+				}, {
+					"title": "Day 3",
+					"start_time": "08:00",
+					"items": []
+				}, {
+					"title": "Day 4",
+					"start_time": "08:00",
+					"items": []
+				}
+			]
+		}
+	}
+}

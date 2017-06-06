@@ -26,22 +26,22 @@ $(function(){
       }
       
       if(schedules_exist){
-        fs.readdir(schedules_path,function(err,file_list){
-          for(var i=0; i<file_list.length; i++){
-            	var li = $('<li class="tile"><img /><a></a></li>'),
-                  baseName = path.basename(file_list[i],'.json'),
-                  imgPath =  path.join(cwd,"schedules",path.basename(file_list[i],'.json')+".png"),
-                  imgTest = fs.existsSync(imgPath);
-              if(path.extname(file_list[i]) !== '.json'){ continue; }
-                li.find('a')
-                  .attr('href', "#"+baseName)
-                  .text(baseName);
-                li.appendTo(ul);
-                if(imgTest){
-                    li.find('img').attr('src', imgPath);
-                } else {
-                    li.find('img').attr('src','./css/img/default_tile.png');
-                }           
+        fs.readdir(schedules_path,function(err,folder_list){
+          for(var i=0; i<folder_list.length; i++){
+              if(!folder_list || folder_list === "undefined" || folder_list == null){ continue; }
+                var li = $('<li class="tile"><img /><a></a></li>'),
+                    baseName = folder_list[i],
+                    imgPath =  path.join(cwd,"schedules",folder_list[i],baseName+".png"),
+                    imgTest = fs.existsSync(imgPath);                
+                  li.find('a')
+                    .attr('href', "#"+baseName)
+                    .text(baseName);
+                  li.appendTo(ul);
+                  if(imgTest){
+                      li.find('img').attr('src', imgPath);
+                  } else {
+                      li.find('img').attr('src','./css/img/default_tile.png');
+                  } 
           }
           $('.list').on('click', function(e){
               if(e.target.tagName === 'A'){

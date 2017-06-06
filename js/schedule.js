@@ -30,14 +30,14 @@ Schedule = function(){
 Schedule.prototype = {
     load: function(file,cb){
         var Self = this;
-        Self.path = path.join(cwd,"schedules",file+".json");
+        Self.path = path.join(cwd,"schedules",file,file+".json");
         fs.readFile(path.join(Self.path), 'utf8', function(err,data){
             Self.data = JSON.parse(data);
             Self.schedule = null;
             if(Self.data.class_info.hasOwnProperty('icon')){
-                 fs.lstat(path.join(cwd,"schedules",Self.data.class_info.icon), function(err,pic){
+                 fs.lstat(path.join(cwd,"schedules",file,Self.data.class_info.icon), function(err,pic){
                     Self.img = pic;
-                    Self.imgPath = path.join(cwd,"schedules",Self.data.class_info.icon);
+                    Self.imgPath = path.join(cwd,"schedules",file,Self.data.class_info.icon);
                     cb();
                 });  
             }
