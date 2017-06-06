@@ -7,7 +7,7 @@ gt = new Array();
 
 // functions to do things with specific files
 custom_cssLoad = function(file){
-    if(path.extname(file).toLowerCase() === '.css'){
+    if(path.extname(file).toLowerCase() === '.css' && file !== "flat_gui.css"){
         gt.push(path.join(settings_path,file));
             var 
                 head = document.getElementById('true_head'),
